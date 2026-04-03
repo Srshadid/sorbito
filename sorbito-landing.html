@@ -34,14 +34,77 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --negro: #100E0B;
-  --oscuro: #1C1812;
-  --cafe: #2B1F13;
-  --dorado: #F0D050;
+  /* ── COLOR PRIMITIVES ── */
+  --negro:   #100E0B;
+  --oscuro:  #1C1812;
+  --cafe:    #2B1F13;
+  --dorado:  #F0D050;
   --naranja: #E85820;
-  --crema: #F2E8D2;
-  --gris: #706860;
-  --blanco: #FAF8F2;
+  --crema:   #F2E8D2;
+  --gris:    #706860;
+  --blanco:  #FAF8F2;
+
+  /* ── SURFACE TOKENS ── */
+  --color-bg:          var(--negro);
+  --color-surface:     var(--oscuro);
+  --color-surface-alt: var(--cafe);
+
+  /* ── TEXT TOKENS ── */
+  --color-text:        var(--crema);
+  --color-text-muted:  var(--gris);
+  --color-text-accent: var(--dorado);
+  --color-text-warm:   var(--naranja);
+  --color-text-inv:    var(--negro);
+
+  /* ── BORDER TOKENS ── */
+  --color-border-subtle: rgba(240,208,80,0.08);
+  --color-border:        rgba(240,208,80,0.15);
+  --color-border-strong: rgba(240,208,80,0.3);
+  --color-border-accent: var(--dorado);
+
+  /* ── FONT FAMILIES ── */
+  --font-heading: 'Onsra', serif;
+  --font-sans:    'TTBackwardsSans', sans-serif;
+  --font-script:  'TTBackwardsScript', cursive;
+
+  /* ── TYPE SCALE: HEADINGS (editorial tight) ── */
+  --type-display: clamp(5rem, 10vw, 9.5rem);
+  --type-h1:      clamp(4rem, 8vw, 7rem);
+  --type-h2:      clamp(2.8rem, 5vw, 4.5rem);
+  --type-h3:      clamp(2rem, 3.5vw, 3rem);
+  --type-h4:      clamp(1.4rem, 2.5vw, 2rem);
+
+  /* ── TYPE SCALE: BODY (legible) ── */
+  --type-lead:    1.2rem;
+  --type-body:    1rem;
+  --type-small:   0.875rem;
+  --type-label:   0.75rem;
+  --type-caption: 0.65rem;
+
+  /* ── LINE HEIGHTS ── */
+  --lh-display: 0.88;   /* display: ultra-apretado */
+  --lh-heading: 0.94;   /* headings: apretado editorial */
+  --lh-sub:     1.1;    /* subheadings */
+  --lh-lead:    1.65;   /* párrafos destacados */
+  --lh-body:    1.85;   /* cuerpo */
+  --lh-ui:      1.4;    /* texto UI / botones */
+
+  /* ── LETTER SPACING ── */
+  --ls-tight:   -0.02em;
+  --ls-normal:   0em;
+  --ls-wide:     0.08em;
+  --ls-wider:    0.14em;
+  --ls-widest:   0.22em;
+
+  /* ── SPACING SCALE ── */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-5: 3rem;
+  --sp-6: 4.5rem;
+  --sp-7: 7rem;
+  --sp-8: 10rem;
 }
 
 html { scroll-behavior: smooth; }
@@ -73,23 +136,23 @@ nav {
 .nav-logo img { height: 28px; filter: brightness(1); }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
 .nav-links a {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--gris); text-decoration: none; transition: color 0.2s;
+  font-family: var(--font-sans);
+  font-size: var(--type-label); letter-spacing: var(--ls-wide); text-transform: uppercase;
+  color: var(--color-text-muted); text-decoration: none; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--dorado); }
 .nav-cta {
-  padding: 0.55rem 1.3rem;
-  border: 1px solid var(--dorado) !important;
-  color: var(--dorado) !important;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--color-border-accent) !important;
+  color: var(--color-text-accent) !important;
   border-radius: 9999px !important;
   transition: all 0.2s !important;
 }
 .nav-cta:hover { background: var(--dorado) !important; color: var(--negro) !important; }
 .nav-clock {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase;
-  color: var(--gris); min-width: 170px;
+  font-family: var(--font-sans);
+  font-size: var(--type-caption); letter-spacing: var(--ls-wide); text-transform: uppercase;
+  color: var(--color-text-muted); min-width: 170px;
 }
 #clock-cdmx { text-align: right; }
 
@@ -106,46 +169,46 @@ nav {
   position: relative; z-index: 2;
 }
 .hero-super {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--dorado); opacity: 0.7;
+  font-family: var(--font-sans);
+  font-size: var(--type-caption); letter-spacing: var(--ls-widest); text-transform: uppercase;
+  color: var(--color-text-accent); opacity: 0.75;
   display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem;
 }
 .hero-super::before { content: ''; width: 2rem; height: 1px; background: var(--dorado); opacity: 0.5; }
 .hero-title {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: clamp(5rem, 10vw, 9.5rem);
-  line-height: 1.02; text-transform: uppercase; letter-spacing: -0.01em;
-  color: var(--dorado); margin-bottom: 1rem;
+  font-family: var(--font-heading);
+  font-size: var(--type-display);
+  line-height: var(--lh-display); text-transform: uppercase; letter-spacing: var(--ls-tight);
+  color: var(--color-text-accent); margin-bottom: 1rem;
   animation: fadeUp 0.8s ease both 0.1s;
 }
 .hero-script {
-  font-family: 'TTBackwardsScript', sans-serif;
+  font-family: var(--font-script);
   font-size: clamp(2.5rem, 5vw, 4.2rem);
   color: var(--crema); opacity: 0.55; line-height: 1.1;
   margin-bottom: 2.5rem; letter-spacing: 0.02em;
   animation: fadeUp 0.8s ease both 0.25s;
 }
 .hero-sub {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.95rem; font-weight: 300; line-height: 1.8;
-  color: var(--gris); max-width: 30rem; margin-bottom: 3rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-lead); font-weight: 300; line-height: var(--lh-lead);
+  color: var(--color-text-muted); max-width: 30rem; margin-bottom: 3rem;
   animation: fadeUp 0.8s ease both 0.4s;
 }
 .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s ease both 0.55s; }
 .btn-gold {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.875rem; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.9rem 2rem; background: var(--dorado); color: var(--negro);
+  font-family: var(--font-sans);
+  font-size: var(--type-label); letter-spacing: var(--ls-wider); text-transform: uppercase;
+  padding: 0.85rem 2rem; background: var(--color-text-accent); color: var(--color-text-inv);
   border: none; cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 0.7rem; font-weight: 700;
   border-radius: 9999px; transition: all 0.2s;
 }
 .btn-gold:hover { background: var(--naranja); color: #fff; }
 .btn-ghost {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.875rem; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.9rem 1.8rem; border: 1px solid rgba(240,208,80,0.3);
+  font-family: var(--font-sans);
+  font-size: var(--type-label); letter-spacing: var(--ls-wider); text-transform: uppercase;
+  padding: 0.85rem 1.8rem; border: 1px solid var(--color-border-strong);
   color: var(--crema); background: transparent; cursor: pointer;
   text-decoration: none; border-radius: 9999px; transition: all 0.2s;
 }
@@ -200,19 +263,20 @@ nav {
   border-right: 1px solid rgba(240,208,80,0.1);
 }
 .manif-tag {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--dorado); opacity: 0.65; margin-bottom: 2.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-caption); letter-spacing: var(--ls-widest); text-transform: uppercase;
+  color: var(--color-text-accent); opacity: 0.7; margin-bottom: 2.5rem;
 }
 .manif-headline {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
-  text-transform: uppercase; line-height: 1.10; letter-spacing: -0.01em;
-  color: var(--crema); margin-bottom: 2.5rem;
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  text-transform: uppercase; line-height: var(--lh-heading); letter-spacing: var(--ls-tight);
+  color: var(--color-text); margin-bottom: 2.5rem;
 }
 .manif-headline em { color: var(--dorado); font-style: normal; }
 .manif-body {
-  font-size: 0.9rem; font-weight: 300; line-height: 1.85; color: var(--gris);
+  font-family: var(--font-sans);
+  font-size: var(--type-body); font-weight: 300; line-height: var(--lh-body); color: var(--color-text-muted);
   max-width: 34rem; margin-bottom: 2rem;
 }
 .manif-statement {
@@ -264,13 +328,14 @@ nav {
   border-bottom: 1px solid rgba(240,208,80,0.12);
 }
 .perfil-title {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: clamp(2.5rem, 4.5vw, 4rem); text-transform: uppercase; line-height: 1.10;
-  color: var(--crema);
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 4.5vw, 4rem); text-transform: uppercase; line-height: var(--lh-heading);
+  color: var(--color-text);
 }
 .perfil-title span { color: var(--dorado); }
 .perfil-intro {
-  font-size: 0.88rem; font-weight: 300; line-height: 1.75; color: var(--gris); max-width: 26rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-body); font-weight: 300; line-height: var(--lh-lead); color: var(--color-text-muted); max-width: 26rem;
 }
 .perfil-grid {
   display: grid; grid-template-columns: repeat(4,1fr);
@@ -290,7 +355,7 @@ nav {
 }
 .pbar-bg { height: 2px; background: rgba(240,208,80,0.12); margin-bottom: 1.2rem; }
 .pbar { height: 2px; background: var(--dorado); }
-.pcard-desc { font-size: 0.78rem; font-weight: 300; line-height: 1.65; color: var(--gris); }
+.pcard-desc { font-family: var(--font-sans); font-size: var(--type-small); font-weight: 300; line-height: var(--lh-lead); color: var(--color-text-muted); }
 
 .metodos-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
 .metodos-label {
@@ -321,9 +386,9 @@ nav {
   flex-direction: column; gap: 1rem;
 }
 .foto-full-title {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: clamp(3rem, 7vw, 6rem); text-transform: uppercase; letter-spacing: -0.01em;
-  color: var(--dorado); text-align: center; line-height: 1.10;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 7vw, 6rem); text-transform: uppercase; letter-spacing: var(--ls-tight);
+  color: var(--color-text-accent); text-align: center; line-height: var(--lh-heading);
 }
 .foto-full-sub {
   font-family: 'TTBackwardsSans', sans-serif;
@@ -338,14 +403,14 @@ nav {
 }
 .precios-header { margin-bottom: 4rem; }
 .precios-tag {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--dorado); opacity: 0.65; margin-bottom: 1rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-caption); letter-spacing: var(--ls-widest); text-transform: uppercase;
+  color: var(--color-text-accent); opacity: 0.7; margin-bottom: 1rem;
 }
 .precios-title {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4rem); text-transform: uppercase; line-height: 1.10;
-  color: var(--crema);
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem); text-transform: uppercase; line-height: var(--lh-heading);
+  color: var(--color-text);
 }
 .precios-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
@@ -380,8 +445,8 @@ nav {
   font-family: 'TTBackwardsSans', sans-serif; font-size: 1.4rem; color: var(--crema); font-weight: 700;
 }
 .pc-margen {
-  font-family: 'TTBackwardsSans', sans-serif; font-size: 0.75rem; font-weight: 300;
-  color: var(--gris); line-height: 1.6;
+  font-family: var(--font-sans); font-size: var(--type-small); font-weight: 300;
+  color: var(--color-text-muted); line-height: var(--lh-lead);
 }
 
 /* ── CTA FINAL ── */
@@ -391,26 +456,26 @@ nav {
 }
 .cta-icon img { width: 72px; opacity: 0.7; margin-bottom: 2rem; }
 .cta-tag {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--dorado); opacity: 0.65; margin-bottom: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-caption); letter-spacing: var(--ls-widest); text-transform: uppercase;
+  color: var(--color-text-accent); opacity: 0.7; margin-bottom: 1.5rem;
 }
 .cta-title {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: clamp(3rem, 7vw, 6rem); text-transform: uppercase; line-height: 1.04;
-  color: var(--crema); margin-bottom: 3.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 7vw, 6rem); text-transform: uppercase; line-height: var(--lh-heading);
+  color: var(--color-text); margin-bottom: 3.5rem;
 }
 .cta-title .l2 { color: var(--dorado); }
 .cta-title .l3 { color: var(--naranja); }
 .cta-sub {
-  font-family: 'TTBackwardsSans', sans-serif; font-size: 0.9rem; font-weight: 300; line-height: 1.8;
-  color: var(--gris); max-width: 32rem; margin: 0 auto 3rem;
+  font-family: var(--font-sans); font-size: var(--type-body); font-weight: 300; line-height: var(--lh-body);
+  color: var(--color-text-muted); max-width: 32rem; margin: 0 auto 3rem;
 }
 .cta-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 .cta-link {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.875rem; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 1rem 2.2rem; border: 1px solid rgba(240,208,80,0.3);
+  font-family: var(--font-sans);
+  font-size: var(--type-label); letter-spacing: var(--ls-wider); text-transform: uppercase;
+  padding: 1rem 2.2rem; border: 1px solid var(--color-border-strong);
   color: var(--crema); text-decoration: none; transition: all 0.2s;
   display: inline-flex; align-items: center; gap: 0.6rem;
   border-radius: 9999px;
