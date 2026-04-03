@@ -132,7 +132,7 @@ nav {
 }
 .nav-top {
   display: flex; justify-content: center; align-items: center;
-  padding: 0.55rem 3rem;
+  padding: 1.2rem 3rem;
   border-bottom: 1px solid rgba(240,208,80,0.08);
 }
 .nav-bottom {
@@ -165,11 +165,14 @@ nav {
 
 /* ── HERO LOGO ── */
 .hero-logo {
-  height: clamp(18px, 2.7vw, 33px);
+  height: auto;
+  max-height: 33px;
+  max-width: 160px;
   width: auto;
   filter: brightness(1);
   margin-bottom: 1.2rem;
   display: block;
+  object-fit: contain;
 }
 
 /* ── HERO ── */
