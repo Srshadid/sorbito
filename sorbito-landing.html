@@ -51,7 +51,7 @@
   --dorado:  #F0D050;
   --naranja: #E85820;
   --crema:   #F2E8D2;
-  --gris:    #706860;
+  --gris:    #8A7F76;
   --blanco:  #FAF8F2;
 
   /* ── SURFACE TOKENS ── */
@@ -93,14 +93,14 @@
 
   /* ── LINE HEIGHTS ── */
   --lh-display: 0.88;   /* display: ultra-apretado */
-  --lh-heading: 0.94;   /* headings: apretado editorial */
+  --lh-heading: 1.08;   /* headings: apretado editorial */
   --lh-sub:     1.1;    /* subheadings */
   --lh-lead:    1.65;   /* párrafos destacados */
   --lh-body:    1.85;   /* cuerpo */
   --lh-ui:      1.4;    /* texto UI / botones */
 
   /* ── LETTER SPACING ── */
-  --ls-tight:    0.01em;
+  --ls-tight:    0.03em;
   --ls-normal:   0em;
   --ls-wide:     0.08em;
   --ls-wider:    0.14em;
@@ -208,9 +208,9 @@ nav {
 .hero-super::before { content: ''; width: 2rem; height: 1px; background: var(--dorado); opacity: 0.5; }
 .hero-script {
   font-family: var(--font-script);
-  font-size: 2.6rem;
+  font-size: 3.6rem;
   color: var(--crema); opacity: 0.65; line-height: 1.1;
-  margin-bottom: 1.2rem; letter-spacing: 0.02em;
+  margin-bottom: 1.2rem; letter-spacing: 0.01em;
   animation: fadeUp 0.8s ease both 0.25s;
 }
 .hero-sub {
@@ -774,10 +774,11 @@ body::after {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left" data-anim="left">
-    <div class="hero-script">café con origen.</div>
+    <h1 class="hero-script">Café con origen.</h1>
     <p class="hero-sub">
       No es café de supermercado. No es de especialidad. Es el punto medio que funciona para tu negocio — artesanal de Chiapas, en lotes de 20 kg, tostado fresco cada pedido.
     </p>
+    
     <div class="hero-btns">
       <a href="#contacto" class="btn-gold">Pedir muestra para tu cafetería →</a>
       <a href="#perfil" class="btn-ghost">Ver perfil de taza</a>
@@ -817,7 +818,7 @@ body::after {
   <!-- Row 1: intro centrado -->
   <div class="manif-intro" data-anim="up">
     <div class="manif-tag">¿Qué es Sorbito?</div>
-    <span class="script-accent">de la tierra al sorbo.</span>
+    <span class="script-accent">De la tierra al sorbo.</span>
     <h2 class="manif-headline">Nace en las <em>montañas.</em><br>Llega a tu <em>barra.</em></h2>
     <div class="manif-body-wrap">
       <p class="manif-body">
