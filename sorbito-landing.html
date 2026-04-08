@@ -665,10 +665,15 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .nav-top { padding: 0.55rem 1.5rem; gap: 1rem; flex-wrap: wrap; }
-  .nav-bottom { padding: 0.7rem 1.5rem; }
-  .nav-links { gap: 1.2rem; }
-  .nav-clock { font-size: 0.72rem; min-width: auto; }
+  /* ── Single-row mobile nav: logo left · CTA right ── */
+  nav { flex-direction: row; align-items: center; padding: 1.125rem 1.25rem; }
+  .nav-top { order: 2; flex: 0 0 auto; padding: 0; border-bottom: none; }
+  .nav-bottom { order: 1; flex: 1; padding: 0; justify-content: flex-start; }
+  .nav-links li:not(:last-child) { display: none; }
+  .nav-links { gap: 0; }
+  .nav-cta { white-space: nowrap; }
+  .nav-clock { display: none; }
+  .nav-logo img { height: 22px; }
   .hero-left { padding: 9rem 1.5rem 3rem; }
   .manif-intro { padding: 4rem 1.5rem 3rem; }
   .manif-body-wrap { grid-template-columns: 1fr; }
@@ -685,9 +690,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .nav-links { gap: 0.8rem; }
-  .nav-clock { display: none; }
-  .nav-logo img { height: 22px; }
   .perfil-grid { grid-template-columns: 1fr; }
   .metodos-section { margin: 3rem -1.5rem -5rem; }
   .metodo-label-row { padding: 1.2rem 1.5rem; }
