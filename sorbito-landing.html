@@ -15,8 +15,8 @@
 <meta name="twitter:description" content="Lotes de 20 kg. Fresco de Chiapas. Para cafeterías, barras, hospitales y oficinas en CDMX y Chihuahua.">
 <meta name="twitter:image" content="./img/hero-img.jpg">
 <link rel="preload" href="./fonts/clashdisplay-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="./fonts/ttbackwardssans-400.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="./fonts/ttbackwardsscript-100.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/ArchivoNarrow-Regular.ttf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/Parisienne-Regular.ttf" as="font" type="font/otf" crossorigin>
 <style>
 @font-face {
   font-family: 'ClashDisplay';
@@ -26,15 +26,15 @@
   font-display: swap;
 }
 @font-face {
-  font-family: 'TTBackwardsSans';
-  src: url('./fonts/ttbackwardssans-400.otf') format('opentype');
+  font-family: 'ArchivoNarrow-Regular';
+  src: url('./fonts/ArchivoNarrow-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'TTBackwardsScript';
-  src: url('./fonts/ttbackwardsscript-100.otf') format('opentype');
+  font-family: 'Parisienne-Regular';
+  src: url('./fonts/Parisienne-Regular.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -51,7 +51,7 @@
   --dorado:  #F0D050;
   --naranja: #E85820;
   --crema:   #F2E8D2;
-  --gris:    #8A7F76;
+  --gris:    #cdc6c0;
   --blanco:  #FAF8F2;
 
   /* ── SURFACE TOKENS ── */
@@ -74,8 +74,8 @@
 
   /* ── FONT FAMILIES ── */
   --font-heading: 'ClashDisplay', sans-serif;
-  --font-sans:    'TTBackwardsSans', sans-serif;
-  --font-script:  'TTBackwardsScript', cursive;
+  --font-sans:    'ArchivoNarrow-Regular', sans-serif;
+  --font-script:  'Parisienne-Regular', cursive;
 
   /* ── TYPE SCALE: HEADINGS (editorial tight) ── */
   --type-display: clamp(4.1rem, 8.2vw, 7.79rem);
@@ -124,7 +124,7 @@
 
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   background: var(--negro);
   color: var(--crema);
   overflow-x: hidden;
@@ -209,6 +209,7 @@ nav {
 .hero-script {
   font-family: var(--font-script);
   font-size: 3.6rem;
+  font-weight: 100;
   color: var(--crema); opacity: 0.65; line-height: 1.1;
   margin-bottom: 1.2rem; letter-spacing: 0.01em;
   animation: fadeUp 0.8s ease both 0.25s;
@@ -268,7 +269,7 @@ nav {
 }
 .hero-badge img { width: 64px; opacity: 0.85; }
 .hero-badge-label {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--dorado); opacity: 0.6; text-align: center;
 }
@@ -280,8 +281,8 @@ nav {
 }
 .marquee-inner { display: inline-flex; animation: marquee 20s linear infinite; }
 .marquee-text {
-  font-family: 'TTBackwardsSans', sans-serif;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
+  font-size: 1.2rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--negro); padding: 0 2rem;
 }
 .marquee-dot { color: var(--naranja); padding: 0 0.3rem; }
@@ -326,7 +327,7 @@ nav {
   color: var(--color-text-muted);
 }
 .manif-statement {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em;
   border-left: 3px solid var(--dorado); padding-left: 1.2rem;
   color: var(--crema); line-height: 1.5;
@@ -353,7 +354,7 @@ nav {
   display: flex; flex-direction: column; justify-content: center;
 }
 .spec-title {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--dorado); opacity: 0.7; margin-bottom: 1.8rem;
   padding-bottom: 1rem; border-bottom: 1px solid rgba(240,208,80,0.15);
@@ -365,12 +366,12 @@ nav {
 }
 .spec-row:last-child { border-bottom: none; }
 .spec-k {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--gris); white-space: nowrap;
 }
 .spec-v {
-  font-family: 'TTBackwardsSans', sans-serif; font-size: 0.95rem; font-weight: 400;
+  font-family: 'ArchivoNarrow-Regular', sans-serif; font-size: 0.95rem; font-weight: 400;
   color: var(--crema); text-align: right;
   font-variant-numeric: tabular-nums;
 }
@@ -419,7 +420,7 @@ nav {
   line-height: 1;
 }
 .pcard-name {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 1.1rem; text-transform: uppercase; color: var(--crema); margin-bottom: 1rem;
 }
 .pbar-bg { height: 2px; background: rgba(240,208,80,0.12); margin-bottom: 1.2rem; overflow: hidden; }
@@ -435,7 +436,7 @@ nav {
 }
 .metodo-label-row {
   padding: 1.4rem 3rem;
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--gris); opacity: 0.5;
 }
@@ -533,7 +534,7 @@ nav {
   color: var(--color-text-accent); text-align: center; line-height: var(--lh-heading);
 }
 .foto-full-sub {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--crema); opacity: 0.5;
 }
@@ -573,7 +574,7 @@ nav {
 .precio-col.gold .pc-row-v,
 .precio-col.gold .pc-margen { color: var(--negro); }
 .pc-canal {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--dorado); margin-bottom: 2rem; padding-bottom: 1rem;
   border-bottom: 1px solid rgba(240,208,80,0.15);
@@ -586,10 +587,10 @@ nav {
 .precio-col.gold .pc-row { border-bottom-color: rgba(16,14,11,0.1); }
 .pc-row:last-of-type { border-bottom: none; margin-bottom: 1.5rem; }
 .pc-row-l {
-  font-family: 'TTBackwardsSans', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--crema);
+  font-family: 'ArchivoNarrow-Regular', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--crema);
 }
 .pc-row-v {
-  font-family: 'TTBackwardsSans', sans-serif; font-size: 1.4rem; color: var(--crema); font-weight: 700;
+  font-family: 'ArchivoNarrow-Regular', sans-serif; font-size: 1.4rem; color: var(--crema); font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 .pc-margen {
@@ -644,7 +645,7 @@ footer {
 }
 .footer-logo img { height: 22px; opacity: 0.5; }
 .footer-info {
-  font-family: 'TTBackwardsSans', sans-serif;
+  font-family: 'ArchivoNarrow-Regular', sans-serif;
   font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--gris); text-align: right; line-height: 2; opacity: 0.6;
 }
