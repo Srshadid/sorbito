@@ -1186,6 +1186,7 @@ body::after {
     <div class="form-success" id="formSuccess">
       <div class="form-success-title">¡Pedido recibido!</div>
       <p class="form-success-sub">Te contactamos en menos de 24 h para confirmar tu pedido y coordinar la entrega.</p>
+      <p class="form-success-sub" style="margin-top:0.75rem;opacity:0.6;">Referencia: <strong id="successOrderId" style="color:var(--dorado);letter-spacing:0.08em;"></strong></p>
     </div>
   </form>
 
@@ -1313,11 +1314,19 @@ body::after {
   // ── Form submit → FormSubmit.co ──
   document.getElementById('muestraForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const correo   = document.getElementById('correo').value.trim();
-    const telefono = document.getElementById('telefono').value.trim();
+    const correo    = document.getElementById('correo').value.trim();
+    const telefono  = document.getElementById('telefono').value.trim();
     const direccion = document.getElementById('direccion').value.trim();
     const cantidad  = document.getElementById('cantidad').value;
     if (!correo || !telefono || !direccion) return;
+
+    // Generar ID de pedido: SRB-YYYYMMDD-XXXX
+    const now    = new Date();
+    const fecha  = now.getFullYear().toString() +
+                   String(now.getMonth() + 1).padStart(2, '0') +
+                   String(now.getDate()).padStart(2, '0');
+    const rand   = String(Math.floor(1000 + Math.random() * 9000));
+    const orderId = 'SRB-' + fecha + '-' + rand;
 
     const btn = this.querySelector('.form-submit');
     btn.textContent = 'Enviando…';
@@ -1327,7 +1336,8 @@ body::after {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        _subject: 'Nuevo pedido — Sorbito',
+        _subject: '🫘 Nuevo pedido ' + orderId + ' — Sorbito',
+        'ID Pedido': orderId,
         Correo: correo,
         Teléfono: telefono,
         Dirección: direccion,
@@ -1341,6 +1351,7 @@ body::after {
         this.querySelector('.form-grid').style.display    = 'none';
         this.querySelector('.qty-toggle').style.display   = 'none';
         btn.style.display = 'none';
+        document.getElementById('successOrderId').textContent = orderId;
         document.getElementById('formSuccess').classList.add('visible');
       } else {
         btn.textContent = 'Enviar pedido →';
