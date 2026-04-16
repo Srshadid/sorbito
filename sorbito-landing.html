@@ -866,29 +866,31 @@ footer {
 }
 
 
-/* ── GOOGLE MAPS AUTOCOMPLETE ── */
-.pac-container {
+/* ── PLACES AUTOCOMPLETE CUSTOM ── */
+.places-wrapper { position: relative; }
+.places-dropdown {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 500;
   background: var(--oscuro);
   border: 1px solid var(--color-border);
   border-top: none;
   border-radius: 0 0 6px 6px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  font-family: var(--font-sans);
-  margin-top: -1px;
+  list-style: none; margin: 0; padding: 0;
+  overflow: hidden;
 }
-.pac-item {
-  padding: 0.65rem 1rem;
+.places-dropdown.open { display: block; }
+.places-dropdown li {
+  padding: 0.7rem 1rem;
   border-top: 1px solid rgba(240,208,80,0.06);
   cursor: pointer;
-  color: var(--color-text-muted);
+  font-family: var(--font-sans);
   font-size: var(--type-small);
+  color: var(--color-text-muted);
   line-height: 1.4;
+  transition: background 0.15s, color 0.15s;
 }
-.pac-item:hover, .pac-item-selected { background: rgba(240,208,80,0.06); }
-.pac-item-query { color: var(--crema); font-size: var(--type-small); }
-.pac-matched { color: var(--dorado); }
-.pac-icon { display: none; }
-.pac-logo::after { display: none; }
+.places-dropdown li:hover { background: rgba(240,208,80,0.06); color: var(--crema); }
 
 /* ── GRAIN TEXTURE OVERLAY ── */
 body::after {
@@ -1194,7 +1196,10 @@ body::after {
       </div>
       <div class="form-field full">
         <label class="form-label" for="direccion">Dirección de entrega</label>
-        <input class="form-input" type="text" id="direccion" name="direccion" placeholder="Calle, colonia, ciudad" required>
+        <div class="places-wrapper">
+          <input class="form-input" type="text" id="direccion" name="direccion" placeholder="Calle, colonia, ciudad" required autocomplete="off">
+          <ul class="places-dropdown" id="placesDropdown"></ul>
+        </div>
       </div>
     </div>
 
@@ -1436,28 +1441,48 @@ body::after {
 </script>
 
 <script>
-  window.gm_authFailure = function() {
-    console.warn('Google Maps auth failure — autocomplete desactivado.');
-  };
-  window.initAutocomplete = function() {
-    try {
-      const input = document.getElementById('direccion');
-      if (!input || !window.google?.maps?.places) return;
-      const ac = new google.maps.places.Autocomplete(input, {
-        componentRestrictions: { country: 'mx' },
-        fields: ['formatted_address'],
-        types: ['address']
+  (function () {
+    const input    = document.getElementById('direccion');
+    const dropdown = document.getElementById('placesDropdown');
+    let timer = null;
+
+    input.addEventListener('input', function () {
+      clearTimeout(timer);
+      const q = this.value.trim();
+      if (q.length < 3) { close(); return; }
+
+      timer = setTimeout(async () => {
+        try {
+          const res  = await fetch('/api/places?q=' + encodeURIComponent(q));
+          const data = await res.json();
+          render(data.predictions || []);
+        } catch (e) { close(); }
+      }, 300);
+    });
+
+    function render(predictions) {
+      dropdown.innerHTML = '';
+      if (!predictions.length) { close(); return; }
+      predictions.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = p.description;
+        li.addEventListener('mousedown', e => {
+          e.preventDefault();
+          input.value = p.description;
+          close();
+        });
+        dropdown.appendChild(li);
       });
-      ac.addListener('place_changed', () => {
-        const place = ac.getPlace();
-        if (place?.formatted_address) input.value = place.formatted_address;
-      });
-    } catch(e) {
-      console.warn('Maps autocomplete no disponible:', e);
+      dropdown.classList.add('open');
     }
-  };
+
+    function close() { dropdown.classList.remove('open'); dropdown.innerHTML = ''; }
+
+    document.addEventListener('click', e => {
+      if (!input.contains(e.target) && !dropdown.contains(e.target)) close();
+    });
+  })();
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5K5cAlkJqA0HgoU3KK1c3lN5PMyP0rSQ&libraries=places&callback=initAutocomplete" async defer></script>
 
 </body>
 </html>
