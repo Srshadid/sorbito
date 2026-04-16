@@ -1435,7 +1435,29 @@ body::after {
   });
 </script>
 
-<!-- Google Maps autocomplete: activar cuando se habilite billing en Google Cloud -->
+<script>
+  window.gm_authFailure = function() {
+    console.warn('Google Maps auth failure — autocomplete desactivado.');
+  };
+  window.initAutocomplete = function() {
+    try {
+      const input = document.getElementById('direccion');
+      if (!input || !window.google?.maps?.places) return;
+      const ac = new google.maps.places.Autocomplete(input, {
+        componentRestrictions: { country: 'mx' },
+        fields: ['formatted_address'],
+        types: ['address']
+      });
+      ac.addListener('place_changed', () => {
+        const place = ac.getPlace();
+        if (place?.formatted_address) input.value = place.formatted_address;
+      });
+    } catch(e) {
+      console.warn('Maps autocomplete no disponible:', e);
+    }
+  };
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5K5cAlkJqA0HgoU3KK1c3lN5PMyP0rSQ&libraries=places&callback=initAutocomplete" async defer></script>
 
 </body>
 </html>
