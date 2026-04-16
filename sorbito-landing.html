@@ -866,6 +866,30 @@ footer {
 }
 
 
+/* ── GOOGLE MAPS AUTOCOMPLETE ── */
+.pac-container {
+  background: var(--oscuro);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  font-family: var(--font-sans);
+  margin-top: -1px;
+}
+.pac-item {
+  padding: 0.65rem 1rem;
+  border-top: 1px solid rgba(240,208,80,0.06);
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: var(--type-small);
+  line-height: 1.4;
+}
+.pac-item:hover, .pac-item-selected { background: rgba(240,208,80,0.06); }
+.pac-item-query { color: var(--crema); font-size: var(--type-small); }
+.pac-matched { color: var(--dorado); }
+.pac-icon { display: none; }
+.pac-logo::after { display: none; }
+
 /* ── GRAIN TEXTURE OVERLAY ── */
 body::after {
   content: '';
@@ -1410,6 +1434,24 @@ body::after {
     el.classList.add('in-view');
   });
 </script>
+
+<script>
+  function initAutocomplete() {
+    const input = document.getElementById('direccion');
+    const autocomplete = new google.maps.places.Autocomplete(input, {
+      componentRestrictions: { country: 'mx' },
+      fields: ['formatted_address'],
+      types: ['address']
+    });
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (place.formatted_address) {
+        input.value = place.formatted_address;
+      }
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5K5cAlkJqA0HgoU3KK1c3lN5PMyP0rSQ&libraries=places&loading=async&callback=initAutocomplete" async defer></script>
 
 </body>
 </html>
