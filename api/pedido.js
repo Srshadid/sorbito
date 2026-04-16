@@ -75,6 +75,18 @@ export default async function handler(req, res) {
       return res.status(500).json({ success: false, error: 'Error al enviar el correo' });
     }
 
+    // Registrar en Google Sheets (fire & forget)
+    const fecha = new Date().toLocaleString('es-MX', {
+      timeZone: 'America/Mexico_City',
+      dateStyle: 'short',
+      timeStyle: 'short',
+    });
+    fetch(process.env.SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, fecha, correo, telefono, direccion, cantidad }),
+    }).catch(e => console.error('Sheets error:', e));
+
     return res.status(200).json({ success: true });
 
   } catch (err) {
