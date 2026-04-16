@@ -1332,21 +1332,14 @@ body::after {
     btn.textContent = 'Enviando…';
     btn.disabled = true;
 
-    fetch('https://formsubmit.co/ajax/contacto@sorbito.club', {
+    fetch('/api/pedido', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: '🫘 Nuevo pedido ' + orderId + ' — Sorbito',
-        'ID Pedido': orderId,
-        Correo: correo,
-        Teléfono: telefono,
-        Dirección: direccion,
-        Cantidad: cantidad
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, correo, telefono, direccion, cantidad })
     })
     .then(r => r.json())
     .then(data => {
-      if (data.success === 'true' || data.success === true) {
+      if (data.success === true) {
         this.querySelectorAll('label').forEach(el => el.style.display = 'none');
         this.querySelector('.form-grid').style.display    = 'none';
         this.querySelector('.qty-toggle').style.display   = 'none';
