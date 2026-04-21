@@ -677,6 +677,19 @@ nav {
   border-color: var(--dorado);
   background: rgba(240,208,80,0.07);
 }
+.form-input.error { border-color: #e05c5c; background: rgba(224,92,92,0.05); }
+.form-error {
+  font-family: var(--font-sans); font-size: 0.68rem;
+  letter-spacing: 0.08em; color: #e05c5c;
+  margin-top: 0.25rem; display: none;
+}
+.form-error.visible { display: block; }
+.form-zona {
+  font-family: var(--font-sans); font-size: var(--type-caption);
+  letter-spacing: var(--ls-wide); text-transform: uppercase;
+  color: var(--color-text-muted); opacity: 0.5;
+  text-align: center; margin-bottom: 1.25rem;
+}
 /* Cantidad — toggle pills */
 .qty-toggle {
   display: flex; gap: 0.75rem; margin-bottom: 1.5rem;
@@ -1186,13 +1199,20 @@ body::after {
   <!-- Formulario -->
   <form class="muestra-form" id="muestraForm" novalidate>
     <div class="form-grid">
+      <div class="form-field full">
+        <label class="form-label" for="nombre">Nombre completo</label>
+        <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Tu nombre" required autocomplete="name">
+        <span class="form-error" id="err-nombre">Ingresa tu nombre completo</span>
+      </div>
       <div class="form-field">
         <label class="form-label" for="correo">Correo</label>
         <input class="form-input" type="email" id="correo" name="correo" placeholder="tu@negocio.com" required>
+        <span class="form-error" id="err-correo">Ingresa un correo válido</span>
       </div>
       <div class="form-field">
-        <label class="form-label" for="telefono">Teléfono</label>
+        <label class="form-label" for="telefono">Teléfono celular</label>
         <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="+52 55 0000 0000" required>
+        <span class="form-error" id="err-telefono">Ingresa tu número de teléfono</span>
       </div>
       <div class="form-field full">
         <label class="form-label" for="direccion">Dirección de entrega</label>
@@ -1200,15 +1220,18 @@ body::after {
           <input class="form-input" type="text" id="direccion" name="direccion" placeholder="Calle, colonia, ciudad" required autocomplete="off">
           <ul class="places-dropdown" id="placesDropdown"></ul>
         </div>
+        <span class="form-error" id="err-direccion">Ingresa tu dirección de entrega</span>
       </div>
     </div>
 
-    <label class="form-label" style="display:block;margin-bottom:0.6rem;">Cantidad</label>
+    <label class="form-label" style="display:block;margin-bottom:0.6rem;">Cantidad de café</label>
     <div class="qty-toggle" id="qtyToggle">
       <button type="button" class="qty-btn active" data-qty="250g">250 g</button>
       <button type="button" class="qty-btn" data-qty="1kg">1 kg</button>
     </div>
     <input type="hidden" id="cantidad" name="cantidad" value="250g">
+
+    <p class="form-zona">Entregas únicamente en CDMX área metropolitana y Chihuahua</p>
 
     <button type="submit" class="form-submit">Enviar pedido →</button>
 
@@ -1340,14 +1363,36 @@ body::after {
     });
   });
 
-  // ── Form submit → FormSubmit.co ──
+  // ── Form submit ──
   document.getElementById('muestraForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    const nombre    = document.getElementById('nombre').value.trim();
     const correo    = document.getElementById('correo').value.trim();
     const telefono  = document.getElementById('telefono').value.trim();
     const direccion = document.getElementById('direccion').value.trim();
-    const cantidad  = document.getElementById('cantidad').value;
-    if (!correo || !telefono || !direccion) return;
+    const cantidad  = document.getElementById('cantidad').value || '250g';
+
+    // Validación con estados de error
+    let valid = true;
+    const campos = [
+      { id: 'nombre',   val: nombre,   err: 'err-nombre' },
+      { id: 'correo',   val: correo,   err: 'err-correo' },
+      { id: 'telefono', val: telefono, err: 'err-telefono' },
+      { id: 'direccion',val: direccion,err: 'err-direccion' },
+    ];
+    campos.forEach(({ id, val, err }) => {
+      const input = document.getElementById(id);
+      const errEl = document.getElementById(err);
+      if (!val) {
+        input.classList.add('error');
+        errEl.classList.add('visible');
+        valid = false;
+      } else {
+        input.classList.remove('error');
+        errEl.classList.remove('visible');
+      }
+    });
+    if (!valid) return;
 
     // Generar ID de pedido: SRB-YYYYMMDD-XXXX
     const now    = new Date();
@@ -1364,7 +1409,7 @@ body::after {
     fetch('/api/pedido', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId, correo, telefono, direccion, cantidad })
+      body: JSON.stringify({ orderId, nombre, correo, telefono, direccion, cantidad })
     })
     .then(r => r.json())
     .then(data => {

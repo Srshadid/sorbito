@@ -3,9 +3,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { orderId, correo, telefono, direccion, cantidad } = req.body;
+  const { orderId, nombre, correo, telefono, direccion, cantidad } = req.body;
 
-  if (!correo || !telefono || !direccion || !orderId) {
+  if (!nombre || !correo || !telefono || !direccion || !orderId) {
     return res.status(400).json({ success: false, error: 'Faltan campos requeridos' });
   }
 
@@ -28,6 +28,10 @@ export default async function handler(req, res) {
 
     <!-- Datos -->
     <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid rgba(240,208,80,0.1);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#cdc6c0;width:120px;">Nombre</td>
+        <td style="padding:12px 0;border-bottom:1px solid rgba(240,208,80,0.1);font-size:15px;color:#F2E8D2;">${nombre}</td>
+      </tr>
       <tr>
         <td style="padding:12px 0;border-bottom:1px solid rgba(240,208,80,0.1);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#cdc6c0;width:120px;">Correo</td>
         <td style="padding:12px 0;border-bottom:1px solid rgba(240,208,80,0.1);font-size:15px;color:#F2E8D2;">${correo}</td>
@@ -91,10 +95,11 @@ export default async function handler(req, res) {
         records: [{
           fields: {
             'Order ID': orderId,
+            'Nombre': nombre,
             'Correo': correo,
             'Teléfono': telefono,
             'Dirección': direccion,
-            'Cantidad': Number(cantidad),
+            'Cantidad': cantidad,
             'Fecha': fechaRegistro,
           },
         }],
