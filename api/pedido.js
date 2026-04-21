@@ -79,13 +79,13 @@ export default async function handler(req, res) {
       return res.status(500).json({ success: false, error: 'Error al enviar el correo' });
     }
 
-    // Registrar en Airtable (fire & forget)
+    // Registrar en Airtable
     const fechaRegistro = new Date().toLocaleString('es-MX', {
       timeZone: 'America/Mexico_City',
       dateStyle: 'short',
       timeStyle: 'short',
     });
-    fetch('https://api.airtable.com/v0/app3wTXS2xoLVGJDS/tblU0mFrGxdsnv9CA', {
+    const airtableRes = await fetch('https://api.airtable.com/v0/app3wTXS2xoLVGJDS/tblU0mFrGxdsnv9CA', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.AIRTABLE_TOKEN}`,
@@ -104,7 +104,11 @@ export default async function handler(req, res) {
           },
         }],
       }),
-    }).catch(e => console.error('Airtable error:', e));
+    });
+    if (!airtableRes.ok) {
+      const err = await airtableRes.json();
+      console.error('Airtable error:', err);
+    }
 
     return res.status(200).json({ success: true });
 
