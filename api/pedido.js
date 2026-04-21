@@ -101,6 +101,7 @@ export default async function handler(req, res) {
             'Dirección': direccion,
             'Cantidad': cantidad,
             'Fecha': fechaRegistro,
+            'Status': 'Por contactar',
           },
         }],
       }),
