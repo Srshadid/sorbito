@@ -75,17 +75,31 @@ export default async function handler(req, res) {
       return res.status(500).json({ success: false, error: 'Error al enviar el correo' });
     }
 
-    // Registrar en Google Sheets (fire & forget)
-    const fecha = new Date().toLocaleString('es-MX', {
+    // Registrar en Airtable (fire & forget)
+    const fechaRegistro = new Date().toLocaleString('es-MX', {
       timeZone: 'America/Mexico_City',
       dateStyle: 'short',
       timeStyle: 'short',
     });
-    fetch(process.env.SHEETS_WEBHOOK_URL, {
+    fetch('https://api.airtable.com/v0/app3wTXS2xoLVGJDS/tblU0mFrGxdsnv9CA', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId, fecha, correo, telefono, direccion, cantidad }),
-    }).catch(e => console.error('Sheets error:', e));
+      headers: {
+        'Authorization': `Bearer ${process.env.AIRTABLE_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        records: [{
+          fields: {
+            'Order ID': orderId,
+            'Correo': correo,
+            'Teléfono': telefono,
+            'Dirección': direccion,
+            'Cantidad': Number(cantidad),
+            'Fecha': fechaRegistro,
+          },
+        }],
+      }),
+    }).catch(e => console.error('Airtable error:', e));
 
     return res.status(200).json({ success: true });
 
